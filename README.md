@@ -7,6 +7,7 @@ Our project explores the application of topological deep learning to improve ski
 * [Installation](#installation)
 * [Data](#data)
 * [Results](#results)
+* [Model Architecture](#model-architecture)
 * [Acknowledgements](#acknowledgements)
 
 
