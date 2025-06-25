@@ -1,7 +1,7 @@
 # TopoDerma
 Code for the paper <br />
 
-Our project explores the application of topological deep learning to improve skin cancer classification across 4 diverse datasets. Through shared self-attention, CLS tokens are able to dynamically select and aggregate the best features from the topology and vision transformer inputs. <br /> 
+Our project explores the application of topological deep learning to improve skin cancer classification across 4 diverse datasets. Through shared self-attention, CLS tokens are able to dynamically select and aggregate the best features from the context-aware persistent homology tokens and vision transformer tokens. <br /> 
 
 ## Table of Contents
 * [Installation](#installation)
