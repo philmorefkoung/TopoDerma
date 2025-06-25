@@ -31,7 +31,8 @@ The links to the original datasets can be found below: <br />
 The detailed results can be found in our paper. To summarize, our topology enhanced models improve existing deep learning model baselines. 
 
 ## Model Architecture
-![TopoDerma drawio (2)](https://github.com/user-attachments/assets/1ef137e1-7587-4ea1-9247-caa6f32206a5)
+![TopoDerma2](https://github.com/user-attachments/assets/a5f68dd1-2acb-4f70-8cb6-79283ee983dd)
+
 
 
 
