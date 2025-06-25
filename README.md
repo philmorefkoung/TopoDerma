@@ -5,18 +5,20 @@ Our project explores the application of topological deep learning to improve ski
 
 ## Table of Contents
 * [Installation](#installation)
-* [Usage](#usage)
 * [Data](#data)
 * [Results](#results)
 * [Acknowledgements](#acknowledgements)
 
 
 ## Installation
-Please refer to the requirements.txt file to install the dependencies
++ Python ≥ 3.9
 
-## Usage
++ PyTorch ≥ 2.0
 
-
++ timm ≥ 0.9
+```
+pip install torch>=2.0 timm>=0.9
+```
 
 ## Data
 The links to the original datasets can be found below: <br />
