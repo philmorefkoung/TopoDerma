@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import timm
 
-class TopoDerma(nn.Module):
+class TopoViT(nn.Module):
     def __init__(
         self,
         num_classes: int,
