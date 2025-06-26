@@ -23,7 +23,7 @@ pip install torch>=2.0 timm>=0.9
 
 ## Data
 The links to the original datasets can be found below: <br />
-* [DermaMNIST](https://medmnist.com/)
+* [DermaMNIST](https://medmnist.com/) (ISIC 2018)
 * [DDI](https://ddi-dataset.github.io/)
 * [PH2](https://www.fc.up.pt/addi/ph2%20database.html)
 * [MED-NODE](https://www.cs.rug.nl/~imaging/databases/melanoma_naevi/) <br />
