@@ -1,5 +1,5 @@
 # TopoDerma
-Code for the paper <br />
+Code for the paper 'Topology-Aware Deep Models for Skin Lesion Classification' <br />
 
 Our project explores the application of topological deep learning to improve skin cancer classification across 4 diverse datasets. Through shared self-attention, CLS tokens are able to dynamically select and aggregate the best features from the context-aware persistent homology tokens and vision transformer tokens. <br /> 
 
