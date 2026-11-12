@@ -1,0 +1,5 @@
+# Feature extraction dependencies; not a historical experiment lockfile.
+numpy
+pandas
+opencv-python
+giotto-tda

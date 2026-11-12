@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use TopoDerma, please cite the paper below."
+title: "TopoDerma"
+type: software
+authors:
+  - family-names: Chakraborty
+    given-names: Sayoni
+  - family-names: Koung
+    given-names: Philmore
+  - family-names: Coskunuzer
+    given-names: Baris
+repository-code: "https://github.com/philmorefkoung/TopoDerma"
+url: "https://workshop.isic-archive.com/2025/paper_chakraborty.pdf"
+preferred-citation:
+  type: conference-paper
+  title: "Topology-Aware Deep Models for Skin Lesion Classification"
+  authors:
+    - family-names: Chakraborty
+      given-names: Sayoni
+    - family-names: Koung
+      given-names: Philmore
+    - family-names: Coskunuzer
+      given-names: Baris
+  collection-title: "Tenth ISIC Skin Image Analysis Workshop at MICCAI 2025"
+  year: 2025
+  url: "https://workshop.isic-archive.com/2025/paper_chakraborty.pdf"
+  notes: "Sayoni Chakraborty and Philmore Koung contributed equally."
