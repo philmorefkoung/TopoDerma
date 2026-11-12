@@ -1,0 +1,5 @@
+# Feature extraction dependencies.
+numpy
+pandas
+opencv-python
+giotto-tda

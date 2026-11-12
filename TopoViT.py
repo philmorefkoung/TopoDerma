@@ -13,12 +13,13 @@ class TopoViT(nn.Module):
         tf_num_heads: int,
         tf_layers: int,
         dropout: float,
+        pretrained: bool = True,
     ):
         super().__init__()
 
         #   Image branch (Vision Transformer)
         self.vit = timm.create_model(
-            "swin_tiny_patch4_window7_224", pretrained=True, num_classes=0
+            "swin_tiny_patch4_window7_224", pretrained=pretrained, num_classes=0
         )
         self.common_dim = self.vit.num_features  # 768 for Swin
         assert self.common_dim in {512, 768}, f"Unexpected feature dim {self.common_dim}"

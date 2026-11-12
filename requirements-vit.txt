@@ -1,0 +1,4 @@
+# Feature extraction and the PyTorch vision transformer.
+-r requirements.txt
+torch>=2.0
+timm>=0.9
