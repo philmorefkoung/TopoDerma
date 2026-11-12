@@ -30,6 +30,8 @@ This repository provides feature extraction and model-building components. Datas
 | [requirements.txt](requirements.txt) | Dependencies for feature extraction. |
 | [requirements-vit.txt](requirements-vit.txt) / [requirements-cnn.txt](requirements-cnn.txt) | Dependencies for the chosen model family, including feature extraction. |
 | [CITATION.cff](CITATION.cff) | Machine-readable citation metadata. |
+| [tests/test_betti_vectorization.py](tests/test_betti_vectorization.py) | Regression for the grayscale H1 block using a synthetic ring and real persistent homology. |
+| [scripts/smoke_train_test.py](scripts/smoke_train_test.py) | Bounded synthetic training and held-out evaluation for each model family. |
 
 ## Installation
 
@@ -55,7 +57,7 @@ python -m pip install -r requirements-vit.txt
 python -m pip install -r requirements-cnn.txt
 ```
 
-These files describe imported packages, not a validated lockfile. Choose framework builds appropriate for your operating system and accelerator. Both model builders request pretrained image weights, which may be downloaded on first use.
+These files describe imported packages, not a validated lockfile. Choose framework builds appropriate for your operating system and accelerator. Both model builders request pretrained image weights by default, which may be downloaded on first use. Use `pretrained=False` for `TopoViT` or `weights=None` for the CNN builder to initialize without downloading weights.
 
 ## Data
 
@@ -90,15 +92,15 @@ assert features.shape == (1, 400)
 features.to_csv("betti_features.csv", index=False)
 ```
 
-Each row contains eight consecutive blocks of 50 values. The intended ordering is:
+Each row contains eight consecutive blocks of 50 values, in this order:
 
 ```text
 gray H0 | gray H1 | red H0 | red H1 | blue H0 | blue H1 | green H0 | green H1
 ```
 
-**Implementation caveat:** `generate_gray1` currently calls the H0 persistence object (`CP0`), so the nominal gray H1 block duplicates gray H0 rather than measuring loops. The red, blue, and green H1 blocks use `CP1`. Account for this discrepancy when interpreting features or reproducing the paper.
+**Feature correction:** The grayscale H1 block now uses `CP1` to measure loops. Earlier code called `CP0` for this block and duplicated grayscale H0. Regenerate cached features and retrain models when adopting this correction; earlier feature files and results are not interchangeable with corrected ones.
 
-The extractor uses cubical persistence with coefficient field 3 and 50-bin Betti curves. It fits the curve sampling separately for each image/channel/homology calculation. The returned DataFrame repeats column labels `0` through `49` for each block; use positional column order when exporting or loading features.
+The extractor uses cubical persistence with coefficient field 3 and 50-bin Betti curves. It fits the curve sampling separately for each image/channel/homology calculation. The returned DataFrame repeats column labels `0` through `49` for each block; use positional column order when exporting or loading features. Set `n_jobs=1` in `generate_betti_vectors` for bounded preprocessing; the default remains `-1`.
 
 ### 2. Build the vision transformer
 
@@ -115,6 +117,7 @@ model = TopoViT(
     tf_num_heads=8,
     tf_layers=6,
     dropout=0.3,
+    pretrained=False,  # Random initialization for this synthetic interface check.
 )
 model.eval()
 
@@ -149,6 +152,20 @@ The Keras model accepts `[images, betti_features]`, with shapes `(batch, 224, 22
 The [paper](https://workshop.isic-archive.com/2025/paper_chakraborty.pdf) describes the experimental protocol and reports results in Tables 2-4. Reproducing those results requires the original data partitions, preprocessing, training settings, and evaluation code in addition to these components. In particular, the released CNN builder uses a softmax/sparse-categorical setup and should not be assumed to implement the paper's separate binary-training recipe.
 
 For new experiments, record the dataset version, split membership, image preprocessing, feature column order, random seeds, framework versions, and selected checkpoint. Preserve alignment between images and topology features throughout batching and splitting.
+
+## Small validation runs
+
+With the relevant requirements installed, run the persistence regression and each model check from the repository root:
+
+```bash
+python -m unittest discover -s tests -v
+python scripts/smoke_train_test.py --model vit --steps 2
+python scripts/smoke_train_test.py --model cnn --steps 2
+```
+
+The regression checks that a synthetic dark ring has a nonzero grayscale H1 curve, distinct from H0 and equal to the identical color-channel H1 curves. The model checks extract real Betti features from four training images and two separate held-out images, take two optimizer steps with batches of two, and evaluate only after training. They assert finite losses and parameter updates and print a JSON summary. Both use random initialization without weight downloads. The ViT check trains the image and topology branches with one fusion layer; the CNN check trains a MobileNetV2-based classifier head with its backbone frozen, as in the builder. These tiny synthetic checks establish execution, not scientific accuracy or reproduction of the paper.
+
+Verified on Windows CPU on **November 12, 2026**, with Python 3.10.20, NumPy 1.26.4, giotto-tda 0.6.2, scikit-learn 1.3.2, and OpenCV 4.10. The ViT run used PyTorch 2.11, torchvision 0.26, and timm 0.9.16; the CNN run used TensorFlow 2.18 and Keras 3.12.4. The real persistence regression passed and rejected the earlier grayscale implementation. Both model checks completed two training steps and held-out evaluation with finite losses and confirmed parameter updates. This records the tested configuration; it is not a locked environment or a guarantee across other package versions.
 
 ## Citation
 

@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Input, Dense, Dropout, BatchNormalization, R
 from tensorflow.keras.applications import DenseNet121, MobileNetV2, InceptionV3
 
 
-def build_cnn_tda_model(input_shape_img, tda_dim, num_classes, base_model_name="DenseNet121"):
+def build_cnn_tda_model(input_shape_img, tda_dim, num_classes, base_model_name="DenseNet121", weights="imagenet"):
     base_models = {
         "DenseNet121": DenseNet121,
         "MobileNetV2": MobileNetV2,
@@ -16,7 +16,7 @@ def build_cnn_tda_model(input_shape_img, tda_dim, num_classes, base_model_name="
         raise ValueError(f"Unsupported base model: {base_model_name}. Choose from {list(base_models.keys())}")
 
     base_model_fn = base_models[base_model_name]
-    base_model = base_model_fn(include_top=False, weights="imagenet", input_shape=input_shape_img)
+    base_model = base_model_fn(include_top=False, weights=weights, input_shape=input_shape_img)
     base_model.trainable = False
 
     # Image input

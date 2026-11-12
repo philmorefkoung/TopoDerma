@@ -5,18 +5,18 @@ import numpy as np
 import pandas as pd 
 
 # takes image array, returns dataframe in format of betti0, betti1 (gray, red, blue, green)
-def generate_betti_vectors(images):
+def generate_betti_vectors(images, n_jobs=-1):
 
     CP0 = CubicalPersistence(
     homology_dimensions=[0],
     coeff=3,
-    n_jobs=-1
+    n_jobs=n_jobs
     )
     
     CP1 = CubicalPersistence(
     homology_dimensions=[1],
     coeff=3,
-    n_jobs=-1
+    n_jobs=n_jobs
     )
 
     # number of betti numbers per color channel 
@@ -95,7 +95,7 @@ def generate_betti_vectors(images):
     def generate_gray1(img):
       # gray 1
       img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)   #convert the image to grayscale
-      diagram_h1_0 = CP0.fit_transform(np.array(img_gray)[None, :, :])
+      diagram_h1_0 = CP1.fit_transform(np.array(img_gray)[None, :, :])
       y_betti_curves_gray = BC.fit_transform(diagram_h1_0)
  
       return np.reshape(y_betti_curves_gray, 50).tolist()
