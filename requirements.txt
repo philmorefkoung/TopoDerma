@@ -1,4 +1,4 @@
-# Feature extraction dependencies; not a historical experiment lockfile.
+# Feature extraction dependencies.
 numpy
 pandas
 opencv-python
